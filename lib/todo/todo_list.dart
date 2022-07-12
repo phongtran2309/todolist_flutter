@@ -1,28 +1,35 @@
 import 'package:flutter/material.dart';
 
-class TodoList extends StatefulWidget {
-  const TodoList({Key? key}) : super(key: key);
+class TodoList extends StatelessWidget {
+  const TodoList({
+    Key? key,
+    required this.tasks,
+    required this.onChange
+  }) : super(key: key);
 
-  @override
-  State<TodoList> createState() => _TodoListState();
-}
+  final List<String> tasks;
+  final ValueChanged<List<String>> onChange;
 
-class _TodoListState extends State<TodoList> {
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
-        itemCount: 10,
+        itemCount: tasks.length,
         itemBuilder: (context, index) {
-      return ListTile(
-        title:  Text('Todo $index'),
-        trailing: GestureDetector(
-          onTap: () {},
-          child: Icon(
-            Icons.delete,
-            color: Colors.red[400],
-          ),
-        ),
-      );
-    });
+          final task = tasks[index];
+          return ListTile(
+            title:  Text('Task $task', style: const TextStyle(fontSize: 20),),
+            trailing: GestureDetector(
+              onTap: () {
+                tasks.removeAt(index);
+                onChange(tasks);
+              },
+              child: Icon(
+                Icons.delete,
+                color: Colors.red[400],
+              ),
+            ),
+
+          );
+        });
   }
 }
