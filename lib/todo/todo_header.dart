@@ -1,4 +1,3 @@
-import 'dart:ffi';
 
 import 'package:flutter/material.dart';
 
@@ -20,7 +19,8 @@ class TodoHeader extends StatelessWidget {
           child: TextFormField(
             // onFieldSubmitted:(value) {},
             controller: txtTodoController,
-            decoration: const InputDecoration(labelText: 'Add task', hintText: 'Add task'),
+            decoration: const InputDecoration(
+                labelText: 'Add task', hintText: 'Add task'),
           ),
         ),
         const SizedBox(width: 20,),
@@ -34,7 +34,6 @@ class TodoHeader extends StatelessWidget {
               // TODO: thong bao toast
               debugPrint('ascbas');
             }
-
           },
           icon: const Icon(Icons.add),
           label: const Text('Add'),
@@ -43,3 +42,46 @@ class TodoHeader extends StatelessWidget {
     );
   }
 }
+
+
+Widget taskFilter = Container(
+  padding: const EdgeInsets.all(10),
+  child: Row(
+    children: [
+      Container(
+        margin: const EdgeInsets.all(10),
+        child: ElevatedButton(
+          style: ElevatedButton.styleFrom(
+            primary: Colors.blue,
+            onPrimary: Colors.white,
+          ),
+          onPressed: () { },
+          child: const Text('Total'),
+        ),
+      ),
+      Container(
+        margin: const EdgeInsets.all(10),
+        child: ElevatedButton(
+          style: ElevatedButton.styleFrom(
+            primary: Colors.blue,
+            onPrimary: Colors.white,
+          ),
+          onPressed: () { },
+          child: const Text('Done'),
+        ),
+      ),
+      Container(
+        margin: const EdgeInsets.all(10),
+        child: ElevatedButton(
+          style: ElevatedButton.styleFrom(
+            primary: Colors.blue,
+            onPrimary: Colors.white,
+          ),
+          onPressed: () { },
+          child: const Text('Not done'),
+        ),
+      ),
+    ],
+  ),
+);
+

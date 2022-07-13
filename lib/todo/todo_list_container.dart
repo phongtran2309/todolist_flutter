@@ -26,6 +26,7 @@ class _TodoListContainerState extends State<TodoListContainer> {
       padding: const EdgeInsets.all(20),
       child: Column(
         children: <Widget>[
+          taskFilter,
           TodoHeader(tasks: tasks, onChange: _handleTasksChanged,),
           Expanded(
               child: TodoList(tasks: tasks, onChange: _handleTasksChanged,)

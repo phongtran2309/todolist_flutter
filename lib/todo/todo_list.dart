@@ -19,10 +19,19 @@ class _TodoListState extends State<TodoList> {
         itemBuilder: (context, index) {
           final task = widget.tasks[index];
           return ListTile(
-            // leading: GestureDetector(
-            //   onTap: () {
-            //     const MyStatefulWidget();
+            // leading: CheckboxListTile(
+            //   title: const Text('check me'),
+            //   secondary: const Icon(Icons.beach_access),
+            //   controlAffinity:
+            //   ListTileControlAffinity.leading, //optionally swap them bring in some state
+            //   value: _checked,
+            //   onChanged: (bool value) {
+            //     setState(() {
+            //       _checked = value;
+            //     });
             //   },
+            //   activeColor: Colors.black,
+            //   checkColor: Colors.green,
             // ),
             title: Text(
               'Task $task',
@@ -40,42 +49,5 @@ class _TodoListState extends State<TodoList> {
             ),
           );
         });
-  }
-}
-
-class MyStatefulWidget extends StatefulWidget {
-  const MyStatefulWidget({Key? key}) : super(key: key);
-
-  @override
-  State<MyStatefulWidget> createState() => _MyStatefulWidgetState();
-}
-
-class _MyStatefulWidgetState extends State<MyStatefulWidget> {
-  bool isChecked = false;
-
-  @override
-  Widget build(BuildContext context) {
-    Color getColor(Set<MaterialState> states) {
-      const Set<MaterialState> interactiveStates = <MaterialState>{
-        MaterialState.pressed,
-        MaterialState.hovered,
-        MaterialState.focused,
-      };
-      if (states.any(interactiveStates.contains)) {
-        return Colors.blue;
-      }
-      return Colors.red;
-    }
-
-    return Checkbox(
-      checkColor: Colors.white,
-      fillColor: MaterialStateProperty.resolveWith(getColor),
-      value: isChecked,
-      onChanged: (bool? value) {
-        setState(() {
-          isChecked = value!;
-        });
-      },
-    );
   }
 }
