@@ -1,5 +1,6 @@
 
 import 'package:flutter/material.dart';
+import 'package:todolist_flutter/model/task.dart';
 
 class TodoHeader extends StatelessWidget {
   const TodoHeader({Key? key,
@@ -7,8 +8,8 @@ class TodoHeader extends StatelessWidget {
     required this.onChange
   }) : super(key: key);
 
-  final List<String> tasks;
-  final ValueChanged<List<String>> onChange;
+  final List<Task> tasks;
+  final ValueChanged<List<Task>> onChange;
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +29,7 @@ class TodoHeader extends StatelessWidget {
           onPressed: () {
             final taskValue = txtTodoController.text;
             if (taskValue.isNotEmpty) {
-              tasks.add(taskValue);
+              tasks.add(Task(taskValue, false));
               onChange(tasks);
             } else {
               // TODO: thong bao toast
@@ -42,46 +43,4 @@ class TodoHeader extends StatelessWidget {
     );
   }
 }
-
-
-Widget taskFilter = Container(
-  padding: const EdgeInsets.all(10),
-  child: Row(
-    children: [
-      Container(
-        margin: const EdgeInsets.all(10),
-        child: ElevatedButton(
-          style: ElevatedButton.styleFrom(
-            primary: Colors.blue,
-            onPrimary: Colors.white,
-          ),
-          onPressed: () { },
-          child: const Text('Total'),
-        ),
-      ),
-      Container(
-        margin: const EdgeInsets.all(10),
-        child: ElevatedButton(
-          style: ElevatedButton.styleFrom(
-            primary: Colors.blue,
-            onPrimary: Colors.white,
-          ),
-          onPressed: () { },
-          child: const Text('Done'),
-        ),
-      ),
-      Container(
-        margin: const EdgeInsets.all(10),
-        child: ElevatedButton(
-          style: ElevatedButton.styleFrom(
-            primary: Colors.blue,
-            onPrimary: Colors.white,
-          ),
-          onPressed: () { },
-          child: const Text('Not done'),
-        ),
-      ),
-    ],
-  ),
-);
 
