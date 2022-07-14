@@ -1,7 +1,6 @@
-
 import 'package:flutter/material.dart';
 import 'package:todolist_flutter/model/task.dart';
-
+// class add task
 class TodoHeader extends StatelessWidget {
   const TodoHeader({Key? key,
     required this.tasks,
@@ -18,7 +17,6 @@ class TodoHeader extends StatelessWidget {
       children: <Widget>[
         Expanded(
           child: TextFormField(
-            // onFieldSubmitted:(value) {},
             controller: txtTodoController,
             decoration: const InputDecoration(
                 labelText: 'Add task', hintText: 'Add task'),
@@ -33,7 +31,7 @@ class TodoHeader extends StatelessWidget {
               onChange(tasks);
             } else {
               // TODO: thong bao toast
-              debugPrint('ascbas');
+              debugPrint('chua nhap gi');
             }
           },
           icon: const Icon(Icons.add),

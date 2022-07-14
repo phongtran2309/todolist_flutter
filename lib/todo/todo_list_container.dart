@@ -10,7 +10,7 @@ class TodoListContainer extends StatefulWidget {
   @override
   State<StatefulWidget> createState() => _TodoListContainerState();
 }
-
+// default list task
 List<Task> _tasksDefault() {
   late List<Task> tasks = [];
   for (var i = 0; i < 10; i++) {
@@ -23,20 +23,21 @@ List<Task> _tasksDefault() {
 class _TodoListContainerState extends State<TodoListContainer> {
   late List<Task> tasks = _tasksDefault();
   final List<String> buttons = ["Total", "Done", "Not done"];
-  late String type = buttons[1];
+  late String type = buttons[0];
+//render list task
   void _handleTasksChanged(List<Task> newTasks) {
     setState(() {
       tasks = newTasks;
     });
   }
-
+//change type onPress
   void onChangeType(String newType) {
     setState(() {
       type = newType;
     });
   }
-
-  Widget groupButton(Widget widget) {
+// btn filter
+  Widget groupButton() {
     return Container(
       padding: const EdgeInsets.all(10),
       child: Row(
@@ -44,17 +45,29 @@ class _TodoListContainerState extends State<TodoListContainer> {
       ),
     );
   }
-
+// add style btn
   List<Widget> buttonsMethod() {
     List<Container> buttonList = [];
+    int totalCount = tasks.length;
+    int doneCount = 0;
+    int notDoneCount = 0;
+    for (var item in tasks) {
+      if (item.status) {
+        doneCount++;
+      } else {
+        notDoneCount++;
+      }
+    }
     for (var button in buttons) {
       Color background = Colors.grey;
       Color textColor = Colors.black;
+      // change style btn when am in
       if (button == type) {
         background = Colors.blue;
         textColor = Colors.white;
       }
       buttonList.add(
+        //create btn
         Container(
           margin: const EdgeInsets.all(10),
           child: ElevatedButton(
@@ -65,10 +78,19 @@ class _TodoListContainerState extends State<TodoListContainer> {
             onPressed: () {
               onChangeType(button);
             },
-            child: Text(button),
-          ),
-        ),
-      );
+            child: () {
+              if (button == 'Done'){
+                return Text('$button: $doneCount');
+              } else if (button == 'Not done'){
+                return Text('$button: $notDoneCount');
+              }
+              else {
+                return Text('$button: $totalCount' );
+              }
+            }(),
+    ),
+    ),
+    );
     }
     return buttonList;
   }
@@ -79,7 +101,7 @@ class _TodoListContainerState extends State<TodoListContainer> {
         padding: const EdgeInsets.all(20),
         child: Column(
           children: <Widget>[
-            groupButton(widget),
+            groupButton(),
             TodoHeader(tasks: tasks, onChange: _handleTasksChanged),
             Expanded(
                 child: TodoList(
