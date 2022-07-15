@@ -37,22 +37,65 @@ class _TodoListState extends State<TodoList> {
         }
       }
     }
+
     return ListView.builder(
         itemCount: itemsValid.length,
         itemBuilder: (context, index) {
           Task task = widget.tasks[itemsValid[index]];
           return CheckboxListTile(
             title: Text('Task ${task.name}'),
-            secondary: GestureDetector(
-                onTap: () {
-                  widget.tasks.removeAt(itemsValid[index]);
-                  widget.onChange(widget.tasks);
-                },
-                child: Icon(
-                  Icons.delete,
-                  color: Colors.red[400],
+            secondary: SizedBox(
+              width: 100,
+              child: Row(
+                children: [
+                GestureDetector(
+                    onTap: () {
+                      debugPrint('up');
+                      Task temp;
+                      if(itemsValid[index] > 0) {
+                        temp = widget.tasks[itemsValid[index]];
+                        widget.tasks[itemsValid[index]] =
+                        widget.tasks[itemsValid[index] - 1];
+                        widget.tasks[itemsValid[index] - 1] = temp;
+                        widget.onChange(widget.tasks);
+                        widget.onChange(widget.tasks);
+                      }
+                    },
+                    child: const Icon(
+                      Icons.arrow_upward,
+                      color: Colors.black,
+                    ),
+                  ),
+                 GestureDetector(
+                  onTap: () {
+                    debugPrint('down');
+                    if(itemsValid[index] < widget.tasks.length - 1) {
+                      Task temp;
+                      temp = widget.tasks[itemsValid[index]];
+                      widget.tasks[itemsValid[index]] =
+                      widget.tasks[itemsValid[index] + 1];
+                      widget.tasks[itemsValid[index] + 1] = temp;
+                      widget.onChange(widget.tasks);
+                    }
+                  },
+                  child: const Icon(
+                    Icons.arrow_downward,
+                    color: Colors.black,
+                  ),
                 ),
+                  GestureDetector(
+                    onTap: () {
+                      widget.tasks.removeAt(itemsValid[index]);
+                      widget.onChange(widget.tasks);
+                    },
+                    child: Icon(
+                      Icons.delete,
+                      color: Colors.red[400],
+                    ),
+                  ),
+                ],
               ),
+            ),
             controlAffinity:
             ListTileControlAffinity.leading, //optionally swap them bring in some state
             value: task.status,
