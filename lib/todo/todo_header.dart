@@ -17,6 +17,15 @@ class TodoHeader extends StatelessWidget {
       children: <Widget>[
         Expanded(
           child: TextFormField(
+            onFieldSubmitted: (value) {
+              if (value.isNotEmpty) {
+                tasks.add(Task(value, false));
+                onChange(tasks);
+              } else {
+                // TODO: thong bao toast
+                debugPrint('chua nhap gi');
+              }
+            },
             controller: txtTodoController,
             decoration: const InputDecoration(
                 labelText: 'Add task', hintText: 'Add task'),

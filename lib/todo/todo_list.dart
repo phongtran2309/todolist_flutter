@@ -2,7 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:todolist_flutter/model/task.dart';
 
 class TodoList extends StatefulWidget {
-  const TodoList({Key? key, required this.tasks, required this.onChange, required this.type})
+  const TodoList(
+      {Key? key,
+      required this.tasks,
+      required this.onChange,
+      required this.type})
       : super(key: key);
 
   final List<Task> tasks;
@@ -16,7 +20,7 @@ class TodoList extends StatefulWidget {
 class _TodoListState extends State<TodoList> {
   @override
   Widget build(BuildContext context) {
-    late List<int> itemsValid= [];
+    late List<int> itemsValid = [];
     if (widget.type == "Total") {
       for (var i = 0; i < widget.tasks.length; i++) {
         itemsValid.add(i);
@@ -42,20 +46,25 @@ class _TodoListState extends State<TodoList> {
         itemCount: itemsValid.length,
         itemBuilder: (context, index) {
           Task task = widget.tasks[itemsValid[index]];
+          final labelColor = task.status ? Colors.red : Colors.black;
+          final labelDecoration =
+              task.status ? TextDecoration.lineThrough : TextDecoration.none;
           return CheckboxListTile(
-            title: Text('Task ${task.name}'),
+            title: Text('Task ${task.name}',
+                style:
+                    TextStyle(color: labelColor, decoration: labelDecoration)),
             secondary: SizedBox(
               width: 100,
               child: Row(
                 children: [
-                GestureDetector(
+                  GestureDetector(
                     onTap: () {
                       debugPrint('up');
                       Task temp;
-                      if(itemsValid[index] > 0) {
+                      if (itemsValid[index] > 0) {
                         temp = widget.tasks[itemsValid[index]];
                         widget.tasks[itemsValid[index]] =
-                        widget.tasks[itemsValid[index] - 1];
+                            widget.tasks[itemsValid[index] - 1];
                         widget.tasks[itemsValid[index] - 1] = temp;
                         widget.onChange(widget.tasks);
                         widget.onChange(widget.tasks);
@@ -66,23 +75,23 @@ class _TodoListState extends State<TodoList> {
                       color: Colors.black,
                     ),
                   ),
-                 GestureDetector(
-                  onTap: () {
-                    debugPrint('down');
-                    if(itemsValid[index] < widget.tasks.length - 1) {
-                      Task temp;
-                      temp = widget.tasks[itemsValid[index]];
-                      widget.tasks[itemsValid[index]] =
-                      widget.tasks[itemsValid[index] + 1];
-                      widget.tasks[itemsValid[index] + 1] = temp;
-                      widget.onChange(widget.tasks);
-                    }
-                  },
-                  child: const Icon(
-                    Icons.arrow_downward,
-                    color: Colors.black,
+                  GestureDetector(
+                    onTap: () {
+                      debugPrint('down');
+                      if (itemsValid[index] < widget.tasks.length - 1) {
+                        Task temp;
+                        temp = widget.tasks[itemsValid[index]];
+                        widget.tasks[itemsValid[index]] =
+                            widget.tasks[itemsValid[index] + 1];
+                        widget.tasks[itemsValid[index] + 1] = temp;
+                        widget.onChange(widget.tasks);
+                      }
+                    },
+                    child: const Icon(
+                      Icons.arrow_downward,
+                      color: Colors.black,
+                    ),
                   ),
-                ),
                   GestureDetector(
                     onTap: () {
                       widget.tasks.removeAt(itemsValid[index]);
@@ -97,14 +106,18 @@ class _TodoListState extends State<TodoList> {
               ),
             ),
             controlAffinity:
-            ListTileControlAffinity.leading, //optionally swap them bring in some state
+                // vi tri cua btn
+                ListTileControlAffinity
+                    .leading, //optionally swap them bring in some state
             value: task.status,
             onChanged: (bool? value) {
               widget.tasks[itemsValid[index]].status = value!;
               widget.onChange(widget.tasks);
             },
+
             activeColor: Colors.black,
             checkColor: Colors.green,
+            selectedTileColor: Colors.greenAccent,
           );
         });
   }
